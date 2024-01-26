@@ -5,10 +5,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import {Link} from 'react-router-dom'
 import { useCategory } from '../hooks/useCategory';
 import CardWidget from './CardWidget';
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 
 export const NavBarComponent  = () => {
 
   const {category} = useCategory();
+
 
     return (<Navbar expand="lg" className="bg-body-tertiary">
     <Container>
@@ -30,7 +33,8 @@ export const NavBarComponent  = () => {
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
-      <CardWidget></CardWidget>
+      <Link to='/create-product'></Link>
+      <CardWidget/>
     </Container>
   </Navbar>)
 }

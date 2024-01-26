@@ -1,28 +1,46 @@
 import {getProducts, getProductById, getProductByCategory} from "../services"
 import { useState, useEffect } from 'react';
+import {doc, getDoc , collection, getDocs, getFirestore} from 'firebase/firestore'
 
-
-export const useGetProducts = (limit = 10) => {
+export const useGetProducts = (collectionName = "products") => {
   const [productsData, setProductData] = useState([]);
 
+  // useEffect(() => {
+  //   getProducts(limit)
+  //   .then(res => setProductData(res.data.products));
+  // }, [])
+
   useEffect(() => {
-    getProducts(limit)
-    .then(res => setProductData(res.data.products));
+    const db = getFirestore();
+    
+    const productsCollection = collection(db, collectionName);
+
+    getDocs(productsCollection).then((snapshot) => {
+      setProductData(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
+    })
+
   }, [])
+
+
+
 
   return {productsData}
 }
 
 
-export const useGetProductById = (id) => {
+export const useGetProductById = (collectionName = "products", id) => {
+
+  const db = getFirestore();
+
   const [productData, setProductData] = useState({});
 
     useEffect(() => {
-      getProductById(id)
-      .then(res => {
-        return setProductData(res.data)
+      const docRef = doc(db, collectionName, id);
+
+      getDoc(docRef).then((doc) => {
+        setProductData({id: doc.id, ...doc.data()})
       })
-    }, [])
+    }, [id])
 
     return {productData}
 }

@@ -3,7 +3,7 @@ import { useGetProducts } from '../hooks/useProducts';
 import ItemListContainer from '../components/ItemListContainer';
 
 export const Home = () => {
-  const { productsData } = useGetProducts(30);
+  const { productsData } = useGetProducts();
 
   return (
     <ItemListContainer productsData={productsData}/>

@@ -2,6 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {Link} from 'react-router-dom'
+import ItemCount from './ItemCount';
 
 const ItemListContainer = ({ productsData }) => {
     
@@ -17,7 +18,7 @@ const ItemListContainer = ({ productsData }) => {
         <Card.Text>
           {item.description}
         </Card.Text>
-        <Button variant="primary">Buy now!</Button>
+        <ItemCount productId={item.id} />
       </Card.Body>
     </Card>)
     })}
